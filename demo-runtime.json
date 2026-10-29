@@ -1,0 +1,10 @@
+{
+  "kind": "fit",
+  "name": "Fit-Pocket",
+  "sql": [
+    "database/01-schema.sql",
+    "database/02-demo.sql"
+  ],
+  "url": "http://127.0.0.1:8083/ProyectoPrueba/",
+  "check": "http://127.0.0.1:8083/webService/webapi/user/ping"
+}
