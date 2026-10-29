@@ -1,0 +1,103 @@
+body {
+    position: relative;
+    min-height: 100%;
+    margin-top: 15px;
+    padding: 30px;
+    background-size: cover;
+    background-color: whitesmoke;
+    font-family: sans-serif;
+}
+
+section {
+    background-color: white;
+    padding: 30px;
+    width: 800px;
+    height: 100%;
+    margin: auto;
+    border-radius: 10px;
+}
+
+header {
+    background-color: rgb(214, 214, 214);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0px;
+    height: 50px;
+    align-items: last baseline;
+}
+
+header * {
+    display: inline;
+}
+
+header li {
+    margin: 20px;
+}
+
+header li a {
+    color: blue;
+    text-decoration: none;
+}
+
+nav {
+    margin: auto;
+    padding: 10px;
+}
+
+.boxBody {
+    background-color: white;
+    padding: 30px;
+    width: 250px;
+    height: 100%;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.logoTxt {
+    text-align: center;
+    font-size: 2rem;
+    color: rgb(122, 153, 219);
+    text-decoration: none;
+}
+
+.logoTxt a {
+    text-decoration: none;
+}
+
+.centerTxt {
+    text-align: center;
+    font-size: small;
+}
+
+.errorTxt {
+    text-align: center;
+    font-size: small;
+    color: red;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 15.5rem;
+    height: 2rem;
+}
+
+.buttonA {
+    width: 15.5rem;
+    padding: 1rem;
+    background-color: rgb(122, 153, 219);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 2rem;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: -100px;
+    width: 100%;
+    height: 100px;
+    background-color: rgb(147, 147, 147);
+    color: white;
+}
