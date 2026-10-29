@@ -38,11 +38,18 @@ public class RestorePasswordServlet extends HttpServlet {
             } catch (InvalidEmailException e) {
                 request.setAttribute("error", e.getMessage());
                 request.getRequestDispatcher(dispatcherURLRestore).forward(request, response);
+                return;
             }
             String code = Password.resetPassword();
             String bodyMesage = "Esta es tu nueva contraseña: " + code;
 
-            new Sender().send(profile.getEmail(), "Restauración de contraseña", "<b>" + bodyMesage + "</b><br/>Link para restaurar contraseña: http://localhost:8080/ProyectoPrueba/jsp/login/updatePassword.jsp");
+            String frontendUrl = System.getenv().getOrDefault("FIT_FRONTEND_URL", "http://127.0.0.1:8083/ProyectoPrueba");
+            boolean delivered = new Sender().send(profile.getEmail(), "Restauración de contraseña", "<b>" + bodyMesage + "</b><br/>Link para restaurar contraseña: " + frontendUrl + "/jsp/login/updatePassword.jsp");
+            if (!delivered) {
+                request.setAttribute("error", "No se pudo entregar el correo. La contraseña no se ha cambiado.");
+                request.getRequestDispatcher(dispatcherURLRestore).forward(request, response);
+                return;
+            }
             UserService userService = new UserService(new UserClient());
             User user = userService.getUserById(profile.getUserId());
             user.setUserPassword(new Password(code).toString());

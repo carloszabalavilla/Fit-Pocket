@@ -58,10 +58,19 @@ public class Sender {
             message.setContent(content, "text/html");
 
             System.out.println("sending...");
-            Transport.send(message);
+            String localDirectory = System.getenv("LOCAL_MAIL_DIR");
+            if (localDirectory != null && !localDirectory.isBlank()) {
+                java.nio.file.Path directory = java.nio.file.Path.of(localDirectory);
+                java.nio.file.Files.createDirectories(directory);
+                try (OutputStream file = java.nio.file.Files.newOutputStream(directory.resolve(java.util.UUID.randomUUID() + ".eml"))) {
+                    message.writeTo(file);
+                }
+            } else {
+                Transport.send(message);
+            }
             System.out.println("Sent message successfully....");
             result = true;
-        } catch (MessagingException mex) {
+        } catch (MessagingException | IOException mex) {
             mex.printStackTrace();
             result = false;
         }

@@ -10,7 +10,7 @@ webapp/ contiene la interfaz JSP; webservice/ la API REST; database/ el esquemaV
 
 Requiere Java17, Node22/24 y MySQL Server8.0 instalado. No es necesario iniciar tu servicio MySQL. Extrae el paquete y ejecuta node start.cjs (o Iniciar.cmd). Si MySQL está en otra ubicación, define MYSQL_HOME con su carpeta de instalación. El launcher crea una instancia propia en .runtime/mysql, en un puerto libre de loopback, sin modificar bases personales. Tomcat escucha en http://127.0.0.1:8083/ProyectoPrueba/.
 
-Acceso exclusivamente ficticio: demo / DemoOnly123!. Hay presupuesto, categoría, moneda, ingreso y gasto de ejemplo. Ctrl+C detiene los dos procesos; los datos se conservan en .runtime/mysql. No expongas este entorno en Internet. Correo de contacto/recuperación necesita SMTP local adicional y no forma parte de la validación de este paquete.
+Acceso exclusivamente ficticio: demo / DemoOnly123!. Hay presupuesto, categoría, moneda, ingreso y gasto de ejemplo. Ctrl+C detiene los dos procesos; los datos se conservan en .runtime/mysql. No expongas este entorno en Internet. Los correos de contacto/recuperación se capturan en .runtime/mail/; no se envía correo real. El email ficticio de la cuenta demo es demo@example.test.
 
 ## Compilar desde fuente
 
@@ -21,3 +21,5 @@ Se corrigieron parámetros SQL de edición, contrato JSON de actualización, Res
 Sustituye las credenciales históricas DB/SMTP/admin si siguen vigentes. No están incluidas como accesos de este paquete; siguen pudiendo existir en el historial.
 
 Prueba HTTP reproducible después del arranque: `node scripts/smoke.cjs` (Node22/24). Utiliza y elimina únicamente registros ficticios de prueba.
+
+Los correos locales se guardan como .eml en .runtime/mail/. Se comprobaron contacto y recuperación con el usuario ficticio. Para repetir esta comprobación en el paquete, ejecuta el script scripts/smoke-mail.cjs del repositorio desde la carpeta del paquete (o define FIT_PACKAGE_ROOT). Solo debe usarse sobre la demo: cambia temporalmente y restaura su contraseña ficticia.

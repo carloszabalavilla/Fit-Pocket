@@ -30,7 +30,8 @@ async function main(){
  if(fresh){fs.mkdirSync(data,{recursive:true});await run(binary('mysqld'),['--no-defaults','--initialize-insecure','--datadir='+data,'--console']);}
  db=spawn(binary('mysqld'),['--no-defaults','--datadir='+data,'--bind-address=127.0.0.1','--port='+port,'--mysqlx=OFF','--console'],{windowsHide:true,stdio:['ignore','pipe','pipe']});
  db.stdout.pipe(log,{end:false});db.stderr.pipe(log,{end:false});db.on('error',error=>{console.error(error.message);stop(1);});
- const client=['--no-defaults','--protocol=TCP','-h','127.0.0.1','-P',String(port),'-u','root'];
+ db.on('exit',()=>{if(!closing){console.error('No se pudo iniciar la base de demostración. Cierra otras instancias de esta carpeta y consulta .runtime/demo.log.');stop(1);}});
+ const client=['--no-defaults','--connect-timeout=1','--protocol=TCP','-h','127.0.0.1','-P',String(port),'-u','root'];
  let ready=false;for(let i=0;i<100&&!closing;i++){try{await run(binary('mysql'),[...client,'-e','SELECT 1']);ready=true;break;}catch{await new Promise(res=>setTimeout(res,500));}}
  if(!ready)throw new Error('MySQL no terminó de arrancar. Consulta .runtime/demo.log.');
  if(fresh){const sql=config.sql.map(file=>fs.readFileSync(path.join(root,file),'utf8')).join('\n');await run(binary('mysql'),client,{input:sql});}
@@ -39,7 +40,7 @@ async function main(){
   const tomcat=path.join(root,'tomcat');
   command=process.env.JAVA_HOME?path.join(process.env.JAVA_HOME,'bin','java.exe'):'java';
   args=['-Dcatalina.home='+tomcat,'-Dcatalina.base='+tomcat,'-Djava.io.tmpdir='+path.join(tomcat,'temp'),'-classpath',path.join(tomcat,'bin','bootstrap.jar')+';'+path.join(tomcat,'bin','tomcat-juli.jar'),'org.apache.catalina.startup.Bootstrap','start'];
-  env={...env,DB_URL:'jdbc:mysql://127.0.0.1:'+port+'/fitpocket?serverTimezone=UTC',DB_USERNAME:'root',DB_PASSWORD:'',FIT_API_URL:'http://127.0.0.1:8083/webService/webapi/'};
+  env={...env,DB_URL:'jdbc:mysql://127.0.0.1:'+port+'/fitpocket?serverTimezone=UTC',DB_USERNAME:'root',DB_PASSWORD:'',LOCAL_MAIL_DIR:path.join(runtime,'mail'),FIT_API_URL:'http://127.0.0.1:8083/webService/webapi/'};
  }else{
   const php=process.env.PHP_HOME||path.join(root,'php');command=path.join(php,'php.exe');
   args=['-d','extension_dir='+path.join(php,'ext'),'-d','extension=mysqli','-S','127.0.0.1:8084','-t',path.join(root,'www')];
