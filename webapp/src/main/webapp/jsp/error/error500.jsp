@@ -226,6 +226,7 @@
             -webkit-animation: anticlockwise 3s linear infinite;
         }
     </style>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/local-refresh.css">
 </head>
 
 <body class="loading">

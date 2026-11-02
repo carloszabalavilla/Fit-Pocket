@@ -23,3 +23,6 @@ Sustituye las credenciales históricas DB/SMTP/admin si siguen vigentes. No est�
 Prueba HTTP reproducible después del arranque: `node scripts/smoke.cjs` (Node22/24). Utiliza y elimina únicamente registros ficticios de prueba.
 
 Los correos locales se guardan como .eml en .runtime/mail/. Se comprobaron contacto y recuperación con el usuario ficticio. Para repetir esta comprobación en el paquete, ejecuta el script scripts/smoke-mail.cjs del repositorio desde la carpeta del paquete (o define FIT_PACKAGE_ROOT). Solo debe usarse sobre la demo: cambia temporalmente y restaura su contraseña ficticia.
+
+## Presentación local (02/11/2026)
+Navegación, formularios y presupuestos adaptados a pantallas estrechas con una hoja de estilo común. Inicio con enlaces a presupuestos; retirado el gráfico con datos estáticos y su dependencia externa. Se mantienen rutas, lógica y autoría compartida.

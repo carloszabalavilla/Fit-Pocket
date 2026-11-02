@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="<%=GlobalInfo.URL_PROYECTO%>/css/style_v2.css"/>
 
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/local-refresh.css">
 </head>
 <body>
 <div class="boxBody">
